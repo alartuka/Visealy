@@ -1,5 +1,7 @@
 import { Alert, Box, Button, Input, SvgIcon, Typography } from '@mui/joy';
 import { useState } from 'react';
+import ReactMarkdown from 'react-markdown';
+
 
 function App() {
   const [image, setImage] = useState(null);
@@ -95,7 +97,7 @@ function App() {
   }
 
   return (
-    <section style={{ textAlign: 'center', justifyItems: 'center', padding: '20px' }}>
+    <section style={{ textAlign: 'center', justifyItems: 'center', padding: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
       <Box
         sx={{
           height: 400,
@@ -149,16 +151,16 @@ function App() {
           >
             <input onChange={uploadImage} type="file" id="file" accept="image/*" hidden/>
 
-            {/* Upload an image.. */}
+            Upload an image...
           </Button>      
         }
       </Box>
 
         
 
-        <Button onClick={surprise} color="success" disabled={response}>Surprise me</Button>
+        <Button onClick={surprise} color="success" p={4} disabled={response}>Surprise me</Button>
 
-        <Box>
+        <Box display="flex" p={4} gap={2} justifyContent={'center'}>
           <Input
               label="Message"
               fullWidth
@@ -194,15 +196,24 @@ function App() {
         }
 
         {response && 
-          <Box display="flex" p={2} justifyContent={'center'}>
-            <Box sx={{ background: 'linear-gradient(to right, #2E0854, #4B0082, #9400D3, #4B0082, #2E0854)',maxWidth:'350px' }} border={'1px solid white'} color="white" borderRadius={16} p={4}>
-              <Typography variant="body1" sx={{ color: '#ffffff' }}>
-                {response}
+          <Box display="flex" p={2} margin={4} gap={2} justifyContent='center' border='1px solid white' borderRadius={16} 
+          sx={{ 
+            background: 'transparent', 
+            boxShadow: '2 8px 9px rgba(0, 0, 0, 0.1)', 
+            transition: 'transform 0.2s',          
+            '&:hover': {
+              transform: 'scale(1.02)',
+            }, 
+          }}>
+            <Typography variant="body1" fontSize={18} component="p" sx={{ color:'white', width: '100%' }}>
+              <ReactMarkdown children={response} />
               </Typography>
-            </Box>
           </Box>
         }
 
+        <Typography variant="body1" color='#ffffff' component="p">
+          &copy; {new Date().getFullYear()} Visealy. All rights reserved.
+        </Typography>
       </section>
   );
 }
